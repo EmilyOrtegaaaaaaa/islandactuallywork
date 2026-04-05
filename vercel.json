@@ -11,7 +11,10 @@
     }
   ],
   "functions": {
-    "api/**/*.py": {
+    "api/game.py": {
+      "excludeFiles": "{public/**,assets/**,__pycache__/**,server.py,render.yaml}"
+    },
+    "api/qr.py": {
       "excludeFiles": "{public/**,assets/**,__pycache__/**,server.py,render.yaml}"
     }
   }
