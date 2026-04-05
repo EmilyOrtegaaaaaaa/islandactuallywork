@@ -2,12 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/game?path=:path*"
-    },
-    {
       "source": "/api/qr",
       "destination": "/api/qr"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/game?path=:path*"
     }
   ]
 }
