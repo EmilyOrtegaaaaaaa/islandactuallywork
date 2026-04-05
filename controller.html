@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=/?mode=join">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting…</title>
+</head>
+<body>
+  <script>
+    const url = new URL("/", window.location.href);
+    url.searchParams.set("mode", "join");
+    const current = new URL(window.location.href);
+    const code = current.searchParams.get("code");
+    if (code) url.searchParams.set("code", code);
+    window.location.replace(url.toString());
+  </script>
+</body>
+</html>

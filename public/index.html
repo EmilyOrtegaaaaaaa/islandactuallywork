@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Island Juggernaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero-panel">
+      <div>
+        <p class="eyebrow">Island Arena Party Game</p>
+        <h1>Island Juggernaut</h1>
+        <p class="lede">Host and join from the same page. Use one screen as the room host, and let players join from phones or PCs on the same site.</p>
+      </div>
+      <div class="mode-switch">
+        <button id="modeHostButton" type="button">Host Game</button>
+        <button id="modeJoinButton" type="button" class="secondary">Join Game</button>
+      </div>
+    </section>
+
+    <section id="hostView" class="view-panel">
+      <section class="status-grid">
+        <article class="glass-card room-card">
+          <span class="label">Room Code</span>
+          <div id="roomCode" class="room-code">----</div>
+          <div id="joinLink" class="tiny-copy">Join link will appear here</div>
+          <div class="qr-wrap">
+            <div id="qrCode" class="qr-code" aria-label="Join QR code"></div>
+            <div id="qrHint" class="tiny-copy">Create a room to generate a scan code.</div>
+          </div>
+        </article>
+
+        <article class="glass-card boss-card">
+          <div class="boss-header">
+            <span class="label">Juggernaut</span>
+            <span id="bossName">No match yet</span>
+          </div>
+          <div class="boss-bar">
+            <div id="bossHealthFill" class="boss-bar-fill"></div>
+          </div>
+          <div id="bossHealthText" class="tiny-copy">1500 HP</div>
+        </article>
+
+        <article class="glass-card round-card">
+          <span class="label">Match State</span>
+          <div id="phaseLabel" class="phase-text">Create a room to begin</div>
+          <div id="messageLabel" class="tiny-copy">Players join as wizard or fighter. One player is randomly chosen as the juggernaut.</div>
+          <div class="host-actions">
+            <button id="createRoomButton" type="button">Create Room</button>
+            <button id="startMatchButton" type="button" class="secondary">Start Match</button>
+            <button id="restartMatchButton" type="button" class="secondary">Rematch</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="stage-grid">
+        <div class="arena-wrap glass-card">
+          <canvas id="hostCanvas" width="1280" height="720"></canvas>
+        </div>
+
+        <aside class="sidebar">
+          <section class="glass-card">
+            <h2>Lobby</h2>
+            <div id="rosterList" class="stack-list"></div>
+          </section>
+
+        <section class="glass-card">
+          <h2>How To Join</h2>
+          <div class="tips">
+            <p>1. Create a room.</p>
+            <p>2. Share the code, link, or QR.</p>
+            <p>3. Players can use the same page in Join Game on phones or PC.</p>
+          </div>
+        </section>
+      </aside>
+      </section>
+    </section>
+
+    <section id="joinView" class="view-panel hidden">
+      <section id="joinPanel" class="glass-card join-panel">
+        <p class="eyebrow">Join The Match</p>
+        <h2>Choose Your Hero</h2>
+        <label class="field">
+          <span>Name</span>
+          <input id="nameInput" type="text" maxlength="18" placeholder="Your hero name">
+        </label>
+        <label class="field">
+          <span>Room Code</span>
+          <input id="codeInput" type="text" maxlength="4" placeholder="ABCD">
+        </label>
+        <div class="role-picker">
+          <button type="button" class="role-button active" data-role="random">Random</button>
+          <button type="button" class="role-button" data-role="wizard">Wizard</button>
+          <button type="button" class="role-button" data-role="fighter">Fighter</button>
+        </div>
+        <button id="joinButton" type="button">Join Match</button>
+        <p id="joinMessage" class="tiny-copy">Use the same website URL, then enter the host's room code.</p>
+      </section>
+
+      <section id="playerView" class="player-layout hidden">
+        <header class="glass-card player-header">
+          <div>
+            <div id="playerName" class="controller-name">Hero</div>
+            <div id="playerRole" class="tiny-copy">Waiting for match start</div>
+          </div>
+          <div class="player-health-wrap">
+            <div class="boss-bar small">
+              <div id="playerHealthFill" class="player-health-fill"></div>
+            </div>
+            <div id="playerHealthText" class="tiny-copy">0 / 0</div>
+          </div>
+        </header>
+
+        <section class="player-stage">
+          <div class="arena-wrap glass-card player-canvas-card">
+            <canvas id="playerCanvas" width="1280" height="720"></canvas>
+            <section class="mobile-controls glass-card mobile-overlay">
+              <div class="mobile-controls-cluster">
+                <div class="mobile-actions-ring">
+                  <button id="mobileQButton" type="button" class="ring-button top">Q</button>
+                  <button id="mobileEButton" type="button" class="ring-button right">E</button>
+                  <button id="mobileRButton" type="button" class="ring-button bottom">R</button>
+                  <div id="movePad" class="touch-pad">
+                    <div id="moveKnob" class="touch-knob"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <aside class="sidebar player-sidebar">
+            <section class="glass-card">
+              <div id="statusMessage" class="phase-text small">Joined lobby</div>
+              <div id="abilityList" class="stack-list ability-list"></div>
+            </section>
+            <section class="glass-card">
+              <h2>Controls</h2>
+              <div class="tips">
+                <p><strong>PC:</strong> `WASD` move, mouse aims, `Left Click` basic attack, `Q/E/R` abilities.</p>
+                <p><strong>Mobile:</strong> left joystick moves, touch the arena to aim, tap the arena to basic attack.</p>
+              </div>
+            </section>
+          </aside>
+        </section>
+      </section>
+    </section>
+
+    <section id="banner" class="banner hidden"></section>
+  </main>
+
+  <audio id="bgmPlayer" preload="none" loop></audio>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/game?path=:path*"
+    },
+    {
+      "source": "/api/qr",
+      "destination": "/api/qr"
+    }
+  ],
+  "functions": {
+    "api/**/*.py": {
+      "excludeFiles": "{public/**,assets/**,__pycache__/**,server.py,render.yaml}"
+    }
+  }
+}

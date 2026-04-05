@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: island-juggernaut
+    runtime: python
+    buildCommand: ""
+    startCommand: python server.py
+    plan: free
