@@ -280,8 +280,8 @@ async function pollState(force = false) {
   try {
     const viewerQuery = playerId ? `&playerId=${playerId}` : "";
     const response = await fetch(`/api/state?code=${roomCode}${viewerQuery}`);
-    if (!response.ok) throw new Error("Failed to fetch room state");
     const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Failed to fetch room state");
     applyState(payload);
     renderHostHud();
     renderPlayerHud();
