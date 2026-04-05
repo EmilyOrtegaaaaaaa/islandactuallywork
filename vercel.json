@@ -9,13 +9,5 @@
       "source": "/api/qr",
       "destination": "/api/qr"
     }
-  ],
-  "functions": {
-    "api/game.py": {
-      "excludeFiles": "{public/**,assets/**,__pycache__/**,server.py,render.yaml}"
-    },
-    "api/qr.py": {
-      "excludeFiles": "{public/**,assets/**,__pycache__/**,server.py,render.yaml}"
-    }
-  }
+  ]
 }
